@@ -1,0 +1,42 @@
+.box {
+  height: 50vh;
+  background: linear-gradient(#e66465, #9198e5);
+}
+span {
+  display: block;
+  // transitionがブロック要素にしか効かない。
+}
+
+$pattern: (
+  "up": translateY(20px),
+  "down": translateY(-20px),
+  "left": translateX(40px),
+  "right": translateX(-40px)
+);
+
+@each $key, $value in $pattern {
+  .io-trigger.#{$key} {
+    & .item {
+      transform: $value;
+    }
+  }
+}
+
+.io-trigger {
+  & .item {
+    transition: all 0.8s;
+    opacity: 0;
+  }
+  &.inview {
+    & .item {
+      opacity: 1;
+      transform: none;
+
+      @for $i from 1 through 10 {
+        &:nth-child(#{$i}) {
+          transition-delay: $i * 0.3s;
+        }
+      }
+    }
+  }
+}
